@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using DG.Tweening;
-using Debug = UnityEngine.Debug;
+﻿using UnityEngine.UI;
 
 public interface IGuiSet
 {
@@ -11,6 +8,22 @@ public interface IGuiSet
 
 public class MainGuiSet : MonoBehaviourBase, IGuiSet
 {
+    private string _moneyTextTemplate;
+    private Text _moneyText;
+    private DollarStore _dollarStore;
+
+    public void Start()
+    {
+        _moneyText = GetComponentInChildren<Text>();
+        _moneyTextTemplate = _moneyText.text;
+        _dollarStore = DollarStore.Instance;
+    }
+
+    public void Update()
+    {
+        _moneyText.text = string.Format(_moneyTextTemplate, _dollarStore.DollarCount);
+    }
+
     public void Disable()
     {
         gameObject.SetActive(false);

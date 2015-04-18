@@ -10,23 +10,26 @@
         _dollarStore = DollarStore.Instance;
         _guiManager = GuiManager.Instance;
 
-        InitializeRound();
+        InitRound();
     }
 
-    private void InitializeRound()
+    public void InitRound()
     {
         ResetDollarCount();
 
         _guiManager.InitRound();
 
-
         // Clean up any civilians
         // Spawn npcs into scene
-
 
         // Lets' not care about this for now
         // Clean up any ducks
         // Spawn ducks into scene
+    }
+
+    public void EndRound()
+    {
+        _guiManager.RoundOver();
     }
 
     private void ResetDollarCount()

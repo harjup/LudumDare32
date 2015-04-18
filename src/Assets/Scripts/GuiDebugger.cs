@@ -3,11 +3,13 @@ using System.Collections;
 
 public class GuiDebugger : MonoBehaviour
 {
-    private GuiManager _manager;
+    private MainManager _manager;
+    private DollarStore _dollarStore;
 
     public void Start()
     {
-        _manager = GuiManager.Instance;
+        _manager = MainManager.Instance;
+        _dollarStore = DollarStore.Instance;
     }
 
     public void StartRoundClick()
@@ -17,6 +19,11 @@ public class GuiDebugger : MonoBehaviour
 
     public void EndRoundClick()
     {
-        _manager.RoundOver();
+        _manager.EndRound();
+    }
+
+    public void AddDollarClick()
+    {
+        _dollarStore.AddDollars(5);
     }
 }
