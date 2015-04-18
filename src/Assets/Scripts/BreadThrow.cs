@@ -11,17 +11,13 @@ public class BreadThrow : MonoBehaviourBase
         _throwPosition = transform.position;
     }
 
-    public void Update()
+
+    public void ThrowTheBread(Vector2 force)
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            var mousePos = Input.mousePosition;
-            var targetPos = Camera.main.ScreenToWorldPoint(mousePos).SetZ(0);
-            
-            var bread = Instantiate(_breadPiece, _throwPosition, transform.rotation) as GameObject;
-            var breadRigidbody = bread.GetComponent<Rigidbody2D>();
-            breadRigidbody.velocity = (targetPos - _throwPosition).normalized * 10f;
-            Debug.Log(breadRigidbody.velocity);
-        }
+        var bread = Instantiate(_breadPiece, _throwPosition, transform.rotation) as GameObject;
+        var breadRigidbody = bread.GetComponent<Rigidbody2D>();
+
+        breadRigidbody.velocity = force;
+        Debug.Log(breadRigidbody.velocity);
     }
 }
