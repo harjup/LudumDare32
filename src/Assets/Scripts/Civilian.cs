@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts
 {
@@ -9,14 +12,16 @@ namespace Assets.Scripts
         public float MinMoveSpeed;
         public float MaxMoveSpeed;
         public State CurrentState;
-        public bool Walking;
+        public bool Stopped;
 
         private Rigidbody2D _rigidbody2D;
-        private float _moveSpeed;
+        public float MoveSpeed;
+        private Animator _animator;
 
         public enum State
         {
             Wandering,
+            Mugged,
             Fleeing
         }
 
@@ -24,18 +29,50 @@ namespace Assets.Scripts
         void Start ()
         {
             _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
-            _moveSpeed = Random.Range(MinMoveSpeed, MaxMoveSpeed);
+            SetMoveSpeed();
+            _animator = GetComponent<Animator>();
+
             CurrentState = State.Wandering;
 
             StartCoroutine(Wander(Random.Range(0, 10), Random.Range(0, 13)));
         }
-	
+
+        private void SetMoveSpeed()
+        {
+            MoveSpeed = Random.Range(MinMoveSpeed, MaxMoveSpeed);
+
+            if (Math.Abs(MoveSpeed) < 1)
+            {
+                SetMoveSpeed();
+            }
+        }
+
         // Update is called once per frame
         void Update ()
         {
-            if (Walking)
+            switch (CurrentState)
             {
-                _rigidbody2D.velocity = new Vector2(_moveSpeed, 0);
+                case State.Wandering:
+                    if (!Stopped)
+                    {
+                        _rigidbody2D.velocity = new Vector2(MoveSpeed, 0);
+
+                        // Change animation speed based on movement speed
+                        // Note: animation speed cannot be negative
+                        _animator.speed = Math.Abs(MoveSpeed);
+                    }
+                    else
+                    {
+                        _animator.speed = 0;
+                    }
+                    break;
+                case State.Mugged:
+                    //TODO: placeholder for mugged animation state
+                    transform.localEulerAngles = new Vector3(0,0,-90);
+
+                    gameObject.layer = LayerMask.NameToLayer("Mugged Civilians");
+                    _rigidbody2D.isKinematic = true;
+                    break;
             }
         }
 
@@ -48,13 +85,11 @@ namespace Assets.Scripts
             }
         }
 
-        private IEnumerator Wander(float secondsToWait, float stateSeed)
+        private IEnumerator Wander(float secondsToWait, float stopSeed)
         {
-            Walking = (stateSeed < 10);
-
-
             if (CurrentState == State.Wandering)
             {
+                Stopped = (stopSeed > 10);
                 yield return new WaitForSeconds(secondsToWait);
                 TurnAround();
                 StartCoroutine(Wander(Random.Range(0, 10), Random.Range(0, 13)));
@@ -63,7 +98,7 @@ namespace Assets.Scripts
 
         private void TurnAround()
         {
-            _moveSpeed *= -1;
+            MoveSpeed *= -1;
         }
     }
 }
