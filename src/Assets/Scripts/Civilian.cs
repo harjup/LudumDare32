@@ -100,5 +100,11 @@ namespace Assets.Scripts
         {
             MoveSpeed *= -1;
         }
+
+        public void CleanUp()
+        {
+            //TODO: Possibly add some extra special animation before destroying self
+            Destroy(gameObject);
+        }
     }
 }

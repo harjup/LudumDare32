@@ -8,7 +8,8 @@ public class Bootstrapper : MonoBehaviourBase {
         {
             {typeof(MainManager), @"Prefabs/Managers/MainManager"},
             {typeof(DollarStore), @"Prefabs/Managers/DollarStore"},
-            {typeof(GuiManager), @"Prefabs/Managers/GuiManager"}
+            {typeof(GuiManager), @"Prefabs/Managers/GuiManager"},
+            {typeof(CivilianManager), @"Prefabs/Managers/CivilianManager"},
         };
 
     void Awake()

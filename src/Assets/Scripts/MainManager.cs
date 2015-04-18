@@ -2,13 +2,14 @@
 {
     private DollarStore _dollarStore;
     private GuiManager _guiManager;
-
+    private CivilianManager _civilianManager;
 
     void Start()
     {
         // Initialize
         _dollarStore = DollarStore.Instance;
         _guiManager = GuiManager.Instance;
+        _civilianManager = CivilianManager.Instance;
 
         InitRound();
     }
@@ -21,6 +22,8 @@
 
         // Clean up any civilians
         // Spawn npcs into scene
+        _civilianManager.SpawnCivilians();
+
 
         // Lets' not care about this for now
         // Clean up any ducks
@@ -36,23 +39,4 @@
     {
         _dollarStore.Reset();   
     }
-
-    private void CleanUpCivilians()
-    {
-
-
-        // Find all civilians in scene
-        // Remove them from scene
-    }
-
-    private void SpawnCivilians()
-    {
-        // Spawn 10 civilians
-        // Within random x range
-        // At specific y
-    }
-
-
-
-
 }
