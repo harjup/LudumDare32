@@ -6,7 +6,9 @@ public class Bootstrapper : MonoBehaviourBase {
 
     private readonly Dictionary<Type, string> _managerPrefabs = new Dictionary<Type, string>()
         {
-            {typeof(MainManager), @"Managers/MainManager"}
+            {typeof(MainManager), @"Managers/MainManager"},
+            {typeof(DollarStore), @"Managers/DollarStore"},
+            {typeof(GuiManager), @"Managers/GuiManager"}
         };
 
     void Awake()
