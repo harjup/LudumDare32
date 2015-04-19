@@ -67,7 +67,7 @@ public class MumblePlayer : MonoBehaviourBase
             if (type == MumbleType.Duck)
             {
                 delayAmount = 0f;
-                _walkSource.volume = .05f;
+                _walkSource.volume = .15f;
             }
             else if (type == MumbleType.Fight)
             {
