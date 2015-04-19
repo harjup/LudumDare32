@@ -8,6 +8,7 @@ namespace Assets.Scripts
         private Rigidbody2D _rigidbody2D;
         private float _diveTargetX = -8.22f;
         private GameObject _targetBread;
+        private GameObject _mugCloud;
 
         public float MoveSpeed;
         private Animator _animator;
@@ -16,6 +17,7 @@ namespace Assets.Scripts
         public float DiveDepth;
         public bool CanMug;
         public GameObject BreadPieceTarget;
+        public float StolenMoney;
         public bool CanReceiveCommands;
 
         public MumblePlayer MumblePlayer;
@@ -66,7 +68,11 @@ namespace Assets.Scripts
 
             if (other.gameObject.tag == "Civilian" && CanMug)
             {
-                other.gameObject.GetComponent<Civilian>().GetMugged();
+                var muggedCiv = other.gameObject.GetComponent<Civilian>();
+                if (!_mugCloud)
+                _mugCloud = Instantiate(Resources.Load(@"Prefabs/Actors/MugCloud"), muggedCiv.transform.position, Quaternion.identity) as GameObject;
+                StolenMoney += muggedCiv.MoneyHeld;
+                muggedCiv.GetMugged();
             }
         }
 
@@ -91,12 +97,15 @@ namespace Assets.Scripts
             diveSequence.Append(Camera.main.DOShakePosition(.2f, .5f));
             diveSequence.Append(Camera.main.transform.DOMove(camOriginalPosition, .1f));
             diveSequence.AppendCallback(() => Destroy(_targetBread));
+            // Return to player
             diveSequence.AppendCallback(() => CanMug = false);
+            diveSequence.AppendCallback(() => Destroy(_mugCloud));
             diveSequence.AppendCallback(() => _animator.SetTrigger("Default"));
             diveSequence.AppendCallback(() => MumblePlayer.StopMumble());
             diveSequence.AppendCallback(() => FindObjectOfType<BreadThrow>().GetTheMoney());
             
             diveSequence.Append(transform.DOMove(new Vector3(-8.22f, 1f, 0), .5f).SetEase(Ease.Linear));
+            // Return to the sky
             diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
             diveSequence.AppendCallback(() => CurrentState = State.Flying);
             diveSequence.AppendCallback(() => CanReceiveCommands = true);
