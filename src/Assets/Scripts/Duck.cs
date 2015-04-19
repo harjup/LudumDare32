@@ -22,12 +22,16 @@ namespace Assets.Scripts
             Other
         }
 
-        void Start()
+        void Awake()
         {
             _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
             //_animator = GetComponent<Animator>();
-            OriginalHeight = transform.position.y;
+        }
 
+        void Start()
+        {
+            DuckManager.Instance.DuckList.Add(this);
+            OriginalHeight = transform.position.y;
             CurrentState = State.Flying;
         }
 

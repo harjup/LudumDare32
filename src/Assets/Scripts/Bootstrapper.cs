@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 
 public class Bootstrapper : MonoBehaviourBase {
@@ -10,6 +11,7 @@ public class Bootstrapper : MonoBehaviourBase {
             {typeof(DollarStore), @"Prefabs/Managers/DollarStore"},
             {typeof(GuiManager), @"Prefabs/Managers/GuiManager"},
             {typeof(CivilianManager), @"Prefabs/Managers/CivilianManager"},
+            {typeof(DuckManager), @"Prefabs/Managers/DuckManager"},
         };
 
     void Awake()

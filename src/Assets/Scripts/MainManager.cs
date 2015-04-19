@@ -6,6 +6,7 @@ public class MainManager : Singleton<MainManager>
     private DollarStore _dollarStore;
     private GuiManager _guiManager;
     private CivilianManager _civilianManager;
+    private DuckManager _duckManager;
 
     void Start()
     {
@@ -13,6 +14,7 @@ public class MainManager : Singleton<MainManager>
         _dollarStore = DollarStore.Instance;
         _guiManager = GuiManager.Instance;
         _civilianManager = CivilianManager.Instance;
+        _duckManager = DuckManager.Instance;
 
         InitRound();
     }
@@ -45,13 +47,10 @@ public class MainManager : Singleton<MainManager>
 
     public void MakeAllFlee()
     {
-        foreach (Civilian civilian in FindObjectsOfType<Civilian>())
+        foreach (var civilian in FindObjectsOfType<Civilian>())
         {
             if (civilian.CurrentState != Civilian.State.Mugged)
-            {
                 civilian.GetComponent<Civilian>().CurrentState = Civilian.State.Fleeing;
-            }
-
         }
     }
 }
