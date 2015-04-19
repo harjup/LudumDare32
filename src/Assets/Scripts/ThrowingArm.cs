@@ -7,7 +7,7 @@ public class ThrowingArm : MonoBehaviourBase
 
     private GameObject _armGraphic;
     private Vector2 _currentVelocity;
-    private Vector2 _previousMousePos;
+    public Vector2 _previousMousePos;
 
     void Start()
     {
@@ -25,15 +25,10 @@ public class ThrowingArm : MonoBehaviourBase
         deltaMouse = new Vector2(deltaMouse.x/Screen.width, deltaMouse.y/Screen.height) / Time.smoothDeltaTime;
 
 
-
-
         Debug.Log(deltaMouse);
         _previousMousePos = mousePos;
         
         var targetPos = Camera.main.ScreenToWorldPoint(mousePos).SetZ(0);
-
-        
-
 
 
         if (Input.GetButtonDown("Fire1"))
@@ -76,7 +71,8 @@ public class ThrowingArm : MonoBehaviourBase
         {
             // Throwing end, actually throw bread
             // Now we need a final direction & magnitude
-            FindObjectOfType<BreadThrow>().ThrowTheBread(deltaMouse);
+            var targetVel = FindObjectOfType<LargeBread>().GetComponent<Rigidbody2D>().velocity;
+            FindObjectOfType<BreadThrow>().ThrowTheBread(targetVel/ 5f);
 
             _armGraphic.SetActive(false);
         }
