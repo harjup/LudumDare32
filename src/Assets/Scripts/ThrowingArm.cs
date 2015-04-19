@@ -29,7 +29,6 @@ public class ThrowingArm : MonoBehaviourBase
         Vector2 mousePos = Input.mousePosition;
         var deltaMouse = (mousePos - _previousMousePos);
 
-
         deltaMouse = new Vector2(deltaMouse.x/Screen.width, deltaMouse.y/Screen.height) / Time.smoothDeltaTime;
 
 
@@ -38,11 +37,20 @@ public class ThrowingArm : MonoBehaviourBase
         
         var targetPos = Camera.main.ScreenToWorldPoint(mousePos).SetZ(-5);
 
-
         if (Input.GetButtonDown("Fire1"))
         {
             //Initialize throwing arm
             transform.position = targetPos;
+            // Lets have some hardcoded limits so the player can always reach the basket
+            if (transform.position.x > 5)
+            {
+                transform.position = transform.position.SetX(5);
+            }
+            if (transform.position.y < -1)
+            {
+                transform.position = transform.position.SetY(-1);
+            }
+
             _armGraphic.SetActive(true);
             _breadBasket.Show();
         }
