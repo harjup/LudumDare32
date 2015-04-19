@@ -10,11 +10,15 @@ public class LargeBread : MonoBehaviour
 
     public float Speed = 100f;
 
+    public void Awake()
+    {
+        _physics = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public void Start()
     {
         arm = FindObjectOfType<ThrowingArm>();
-        _physics = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Update()

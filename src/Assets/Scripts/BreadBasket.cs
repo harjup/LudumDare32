@@ -6,7 +6,7 @@ public class BreadBasket : MonoBehaviourBase
     private SpriteRenderer _spriteRenderer;
 
 
-    public void Start()
+    public void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -19,7 +19,6 @@ public class BreadBasket : MonoBehaviourBase
 
     public void Hide()
     {
-        
         _spriteRenderer.enabled = false;
         gameObject.SetActive(false);
     }
