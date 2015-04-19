@@ -9,8 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 451342}
   - 33: {fileID: 3324930}
-  - 135: {fileID: 13598602}
   - 23: {fileID: 2328036}
+  - 114: {fileID: 11493794}
+  - 58: {fileID: 5859672}
   m_Layer: 0
   m_Name: MugCloud
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.20221472, y: -2.21149087, z: 0}
   m_LocalScale: {x: 1.36785841, y: 1.36785877, z: 1.36785877}
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,18 +62,31 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152252}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!135 &13598602
-SphereCollider:
+--- !u!58 &5859672
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152252}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11493794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b1a44efef7dd6843a96436fa3dd54de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MugMoney: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
