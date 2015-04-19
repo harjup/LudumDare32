@@ -74,8 +74,9 @@ namespace Assets.Scripts
             var originalXPosition = transform.position.x;
             _rigidbody2D.velocity = Vector2.zero;
 
-            diveSequence.Append(transform.DOMove(new Vector3(diveTargetX, DiveDepth, 0f), 1.0f).SetEase(Ease.InOutCubic));
+            var diveSequence = DOTween.Sequence();
             diveSequence.AppendCallback(() => CanMug = true);
+            diveSequence.Append(transform.DOMove(new Vector3(diveTargetX, DiveDepth, 0f), 1.0f).SetEase(Ease.InOutCubic));
             diveSequence.Append(Camera.main.DOShakePosition(.2f, .5f));
             diveSequence.Append(Camera.main.transform.DOMove(camOriginalPosition, .1f));
             diveSequence.AppendCallback(() => Destroy(targetBread));
