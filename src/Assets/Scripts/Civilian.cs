@@ -70,8 +70,6 @@ namespace Assets.Scripts
                     break;
 
                 case State.Mugged:
-                    //TODO: placeholder for mugged animation state
-                    transform.localEulerAngles = new Vector3(0,0,-90);
                     gameObject.layer = LayerMask.NameToLayer("Mugged Civilians");
                     _rigidbody2D.isKinematic = true;
                     break;
@@ -144,6 +142,10 @@ namespace Assets.Scripts
         public void GetMugged()
         {
             CurrentState = State.Mugged;
+            Stopped = false;
+            _animator.speed = 1f;
+            
+            _animator.SetTrigger("Mugged");
             CivilianManager.Instance.RemoveCivilianFromActiveCount(gameObject);
         }
 
