@@ -94,6 +94,7 @@ MonoBehaviour:
   DiveDepth: -3.75
   CanMug: 0
   BreadPieceTarget: {fileID: 0}
+  CanReceiveCommands: 1
 --- !u!212 &21292574
 SpriteRenderer:
   m_ObjectHideFlags: 1

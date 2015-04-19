@@ -6,7 +6,7 @@ public class MainManager : Singleton<MainManager>
     private DollarStore _dollarStore;
     private GuiManager _guiManager;
     private CivilianManager _civilianManager;
-    private DuckManager _duckManager;
+    //private DuckManager _duckManager;
 
     void Start()
     {
@@ -14,7 +14,7 @@ public class MainManager : Singleton<MainManager>
         _dollarStore = DollarStore.Instance;
         _guiManager = GuiManager.Instance;
         _civilianManager = CivilianManager.Instance;
-        _duckManager = DuckManager.Instance;
+        //_duckManager = DuckManager.Instance;
 
         InitRound();
     }

@@ -6,15 +6,14 @@ namespace Assets.Scripts
 {
     public class DuckManager : Singleton<DuckManager>
     {
+        public List<BreadPiece> BreadList = new List<BreadPiece>();
         public List<Duck> DuckList = new List<Duck>();
 
         public void CommandDuck(GameObject breadTarget)
         {
-            foreach (var duck in DuckList.Where(duck => duck.CurrentState == Duck.State.Flying))
-            {
-                duck.PursueBread(breadTarget);
-                break;
-            }
+            var duck = DuckList.First();
+            DuckList.RemoveAt(0);
+            duck.PursueBread(breadTarget);
         }
     }
 }
