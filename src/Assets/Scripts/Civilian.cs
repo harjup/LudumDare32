@@ -89,15 +89,30 @@ namespace Assets.Scripts
             }
         }
 
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.tag == "Screen Bounds")
+            {
+                if (CurrentState == State.Fleeing)
+                {
+                    Debug.Log("Leaving");
+                    Leave();
+                }
+            }
+        }
+        
+        
         public void OnCollisionEnter2D (Collision2D coll)
         {
             if (coll.gameObject.tag == "Screen Bounds" && CurrentState != State.Fleeing)
             {
-                TurnAround();
+                TurnAround();    
             }
 
             // Probably don't need the first condition
-            if (CurrentState != State.Mugged && coll.gameObject.tag == "Civilian" && coll.gameObject.GetComponent<Civilian>().CurrentState == State.Mugged)
+            if (CurrentState != State.Mugged && 
+                coll.gameObject.tag == "Civilian" && 
+                coll.gameObject.GetComponent<Civilian>().CurrentState == State.Mugged)
             {
                 if (CurrentState == State.Spooked)
                 {
@@ -124,6 +139,17 @@ namespace Assets.Scripts
             if (!_canTurn) return;
             MoveSpeed *= -1;
             transform.localScale = transform.localScale.SetX(transform.localScale.x * -1);
+        }
+
+        public void GetMugged()
+        {
+            CurrentState = State.Mugged;
+            CivilianManager.Instance.RemoveCivilianFromActiveCount(gameObject);
+        }
+
+        public void Leave()
+        {
+            CivilianManager.Instance.RemoveCivilianFromActiveCount(gameObject);
         }
 
         public void CleanUp ()

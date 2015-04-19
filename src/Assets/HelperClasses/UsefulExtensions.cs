@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UsefulExtensions
@@ -90,3 +93,10 @@ public static class GameObjectExtension
     }
 }
 
+public static class ListExtension
+{
+    public static bool None<T>(this IEnumerable<T> list)
+    {
+        return !list.Any();
+    }
+}
