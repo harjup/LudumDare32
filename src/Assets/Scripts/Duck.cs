@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using DG.Tweening;
 
 namespace Assets.Scripts
@@ -9,7 +7,7 @@ namespace Assets.Scripts
     {
         private Rigidbody2D _rigidbody2D;
         public float MoveSpeed;
-        private Animator _animator;
+        //private Animator _animator;
         public State CurrentState;
         public float OriginalHeight;
         public float DiveDepth;
@@ -27,7 +25,7 @@ namespace Assets.Scripts
         void Start()
         {
             _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
-            _animator = GetComponent<Animator>();
+            //_animator = GetComponent<Animator>();
             OriginalHeight = transform.position.y;
 
             CurrentState = State.Flying;
@@ -76,7 +74,6 @@ namespace Assets.Scripts
             var originalXPosition = transform.position.x;
             _rigidbody2D.velocity = Vector2.zero;
 
-            Sequence diveSequence = DOTween.Sequence();
             diveSequence.Append(transform.DOMove(new Vector3(diveTargetX, DiveDepth, 0f), 1.0f).SetEase(Ease.InOutCubic));
             diveSequence.AppendCallback(() => CanMug = true);
             diveSequence.Append(Camera.main.DOShakePosition(.2f, .5f));

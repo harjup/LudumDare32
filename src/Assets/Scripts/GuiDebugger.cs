@@ -26,4 +26,9 @@ public class GuiDebugger : MonoBehaviour
     {
         _dollarStore.AddDollars(5);
     }
+
+    public void MakeAllFlee()
+    {
+        _manager.MakeAllFlee();
+    }
 }
