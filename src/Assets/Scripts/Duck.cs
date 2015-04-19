@@ -107,7 +107,6 @@ namespace Assets.Scripts
             //This is the only way I could make the duck wait a bit for the mug cloud
             diveSequence.AppendInterval(.2f);
             // Return to player
-            diveSequence.AppendCallback(() => ShowMoney = true);
             diveSequence.AppendCallback(() => CanMug = false);
             diveSequence.AppendCallback(() => Destroy(_mugCloud));
             diveSequence.AppendCallback(() => _animator.SetTrigger("Default"));
@@ -116,7 +115,13 @@ namespace Assets.Scripts
             
             diveSequence.Append(transform.DOMove(new Vector3(-8.22f, 1f, 0), .5f).SetEase(Ease.Linear));
             // Return to the sky
-            diveSequence.AppendCallback(() => ShowMoney = false);
+            diveSequence.AppendCallback(() =>
+            {
+                ShowMoney = false;
+                DollarStore.Instance.AddDollars(StolenMoney);
+                StolenMoney = 0f;
+            });
+
             diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
             diveSequence.AppendCallback(() => CurrentState = State.Flying);
             diveSequence.AppendCallback(() => CanReceiveCommands = true);
@@ -126,6 +131,10 @@ namespace Assets.Scripts
         private void GainMoney(GameObject mugCloud)
         {
             StolenMoney += mugCloud.GetComponent<MugCloud>().MugMoney;
+            if (StolenMoney > 0)
+            {
+                ShowMoney = true;
+            }
         }
 
         // Returns a bool so this method can get called in a Select

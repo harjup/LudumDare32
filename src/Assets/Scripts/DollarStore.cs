@@ -1,6 +1,6 @@
 public class DollarStore : Singleton<DollarStore>
 {
-    public int DollarCount { get; private set; }
+    public float DollarCount { get; private set; }
 
     void Start()
     {
@@ -12,7 +12,7 @@ public class DollarStore : Singleton<DollarStore>
         DollarCount = 0;
     }
 
-    public void AddDollars(int amount)
+    public void AddDollars(float amount)
     {
         DollarCount += amount;
     }
