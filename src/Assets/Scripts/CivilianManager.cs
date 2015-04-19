@@ -30,7 +30,7 @@ public class CivilianManager : Singleton<CivilianManager>
     {
         CleanUpCivilians();
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 25; i++)
         {
             var xPos = Random.Range(_leftBounds, _rightBounds);
             var yPos = _vertical;
