@@ -13,8 +13,7 @@ public class BreadPiece : MonoBehaviourBase
         if (coll.gameObject.tag == "Ground")
         {
             _hitFloor = true;
-
-            FindObjectsOfType<Duck>().First().PursueBread(gameObject);
+            DuckManager.Instance.CommandDuck(gameObject);
         }
     }
 
