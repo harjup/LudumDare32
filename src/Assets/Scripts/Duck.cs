@@ -10,7 +10,7 @@ namespace Assets.Scripts
         private GameObject _targetBread;
 
         public float MoveSpeed;
-        //private Animator _animator;
+        private Animator _animator;
         public State CurrentState;
         public float OriginalHeight;
         public float DiveDepth;
@@ -29,7 +29,7 @@ namespace Assets.Scripts
         void Start()
         {
             _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
-            //_animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
             OriginalHeight = transform.position.y;
             CurrentState = State.Flying;
 
@@ -76,6 +76,7 @@ namespace Assets.Scripts
             _rigidbody2D.velocity = Vector2.zero;
 
             var diveSequence = DOTween.Sequence();
+            diveSequence.AppendCallback(() => _animator.SetTrigger("Dive"));
             diveSequence.AppendCallback(() => CanReceiveCommands = false);
             diveSequence.AppendCallback(() => CanMug = true);
             diveSequence.Append(transform.DOMove(new Vector3(_diveTargetX, DiveDepth, 0f), 1.0f).SetEase(Ease.InOutCubic));
@@ -83,6 +84,7 @@ namespace Assets.Scripts
             diveSequence.Append(Camera.main.transform.DOMove(camOriginalPosition, .1f));
             diveSequence.AppendCallback(() => Destroy(_targetBread));
             diveSequence.AppendCallback(() => CanMug = false);
+            diveSequence.AppendCallback(() => _animator.SetTrigger("Default"));
             diveSequence.Append(transform.DOMove(new Vector3(-8.22f, 1f, 0), .5f).SetEase(Ease.Linear));
             diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
             diveSequence.AppendCallback(() => CurrentState = State.Flying);
