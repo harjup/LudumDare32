@@ -91,7 +91,7 @@ namespace Assets.Scripts
             diveSequence.AppendCallback(() => Destroy(targetBread));
             diveSequence.AppendCallback(() => CanMug = false);
             diveSequence.AppendCallback(() => _animator.SetTrigger("Default"));
-
+            diveSequence.AppendCallback(() => FindObjectOfType<BreadThrow>().GetTheMoney());
             diveSequence.Append(transform.DOMove(new Vector3(-8.22f, 1f, 0), .5f).SetEase(Ease.Linear));
             diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
             diveSequence.AppendCallback(() => CurrentState = State.Flying);
