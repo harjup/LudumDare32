@@ -40,6 +40,7 @@ namespace Assets.Scripts
             SetMoveSpeed();
             CurrentState = State.Walking;
             StartCoroutine(_wanderController);
+            MoneyHeld = Random.Range(0, 10f);
         }
 
         private void SetMoveSpeed ()
@@ -147,6 +148,7 @@ namespace Assets.Scripts
             
             _animator.SetTrigger("Mugged");
             CivilianManager.Instance.RemoveCivilianFromActiveCount(gameObject);
+            MoneyHeld = 0;
         }
 
         public void Leave()
