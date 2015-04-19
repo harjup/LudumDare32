@@ -19,6 +19,7 @@ namespace Assets.Scripts
         public GameObject BreadPieceTarget;
         public float StolenMoney;
         public bool CanReceiveCommands;
+        public bool ShowMoney;
 
         public MumblePlayer MumblePlayer;
 
@@ -59,6 +60,13 @@ namespace Assets.Scripts
                 case State.Other:
                     break;
             }
+
+            if (ShowMoney)
+                transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+            else
+            {
+                transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
 
         public void OnTriggerEnter2D(Collider2D other)
@@ -71,8 +79,6 @@ namespace Assets.Scripts
                 var muggedCiv = other.gameObject.GetComponent<Civilian>();
                 if (!_mugCloud)
                 _mugCloud = Instantiate(Resources.Load(@"Prefabs/Actors/MugCloud"), muggedCiv.transform.position, Quaternion.identity) as GameObject;
-                StolenMoney += muggedCiv.MoneyHeld;
-                muggedCiv.GetMugged();
             }
         }
 
@@ -97,7 +103,11 @@ namespace Assets.Scripts
             diveSequence.Append(Camera.main.DOShakePosition(.2f, .5f));
             diveSequence.Append(Camera.main.transform.DOMove(camOriginalPosition, .1f));
             diveSequence.AppendCallback(() => Destroy(_targetBread));
+            diveSequence.AppendCallback(() => GainMoney(_mugCloud));
+            //This is the only way I could make the duck wait a bit for the mug cloud
+            diveSequence.AppendInterval(.2f);
             // Return to player
+            diveSequence.AppendCallback(() => ShowMoney = true);
             diveSequence.AppendCallback(() => CanMug = false);
             diveSequence.AppendCallback(() => Destroy(_mugCloud));
             diveSequence.AppendCallback(() => _animator.SetTrigger("Default"));
@@ -106,10 +116,16 @@ namespace Assets.Scripts
             
             diveSequence.Append(transform.DOMove(new Vector3(-8.22f, 1f, 0), .5f).SetEase(Ease.Linear));
             // Return to the sky
+            diveSequence.AppendCallback(() => ShowMoney = false);
             diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
             diveSequence.AppendCallback(() => CurrentState = State.Flying);
             diveSequence.AppendCallback(() => CanReceiveCommands = true);
             diveSequence.AppendCallback(() => DuckManager.Instance.DuckList.Insert(DuckManager.Instance.DuckList.Count, this));
+        }
+
+        private void GainMoney(GameObject mugCloud)
+        {
+            StolenMoney += mugCloud.GetComponent<MugCloud>().MugMoney;
         }
 
         // Returns a bool so this method can get called in a Select

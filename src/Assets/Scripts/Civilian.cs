@@ -40,7 +40,7 @@ namespace Assets.Scripts
             SetMoveSpeed();
             CurrentState = State.Walking;
             StartCoroutine(_wanderController);
-            MoneyHeld = Random.Range(0, 10f);
+            MoneyHeld = 20;
         }
 
         private void SetMoveSpeed ()

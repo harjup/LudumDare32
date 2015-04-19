@@ -429,23 +429,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 488174, guid: 79f94b2c9e4b9dd44a251873ec4691e6, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 145584, guid: 79f94b2c9e4b9dd44a251873ec4691e6, type: 2}
       propertyPath: m_Name
       value: Duck 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6110412, guid: 79f94b2c9e4b9dd44a251873ec4691e6, type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11487898, guid: 79f94b2c9e4b9dd44a251873ec4691e6, type: 2}
-      propertyPath: CanMug
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11487898, guid: 79f94b2c9e4b9dd44a251873ec4691e6, type: 2}
-      propertyPath: CanReceiveCommands
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 79f94b2c9e4b9dd44a251873ec4691e6, type: 2}
@@ -782,7 +770,7 @@ Transform:
   - {fileID: 547258452}
   - {fileID: 2081823538}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1001 &1282048356
 Prefab:
   m_ObjectHideFlags: 0
@@ -988,7 +976,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1529134721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,7 +1473,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438552, guid: 92bc442b56c09f34cab2bb0884767e06, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 92bc442b56c09f34cab2bb0884767e06, type: 2}
