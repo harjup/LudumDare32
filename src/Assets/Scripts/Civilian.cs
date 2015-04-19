@@ -30,6 +30,7 @@ namespace Assets.Scripts
         {
             _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
             SetMoveSpeed();
+
             _animator = GetComponent<Animator>();
 
             CurrentState = State.Wandering;
@@ -41,10 +42,10 @@ namespace Assets.Scripts
         {
             MoveSpeed = Random.Range(MinMoveSpeed, MaxMoveSpeed);
 
-            if (Math.Abs(MoveSpeed) < 1)
-            {
+            if (Math.Abs(MoveSpeed) > 1 && MoveSpeed > 0)
+                transform.localScale = transform.localScale.SetX(transform.localScale.x * -1);
+            else if (Math.Abs(MoveSpeed) < 1)
                 SetMoveSpeed();
-            }
         }
 
         // Update is called once per frame
@@ -80,7 +81,6 @@ namespace Assets.Scripts
         {
             if (coll.gameObject.tag == "Screen Bounds")
             {
-                print("hit wall");
                 TurnAround();
             }
         }
@@ -99,6 +99,7 @@ namespace Assets.Scripts
         private void TurnAround()
         {
             MoveSpeed *= -1;
+            transform.localScale = transform.localScale.SetX(transform.localScale.x * -1);
         }
 
         public void CleanUp()
