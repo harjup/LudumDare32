@@ -20,7 +20,8 @@ namespace Assets.Scripts
         {
             Flying,
             Diving,
-            Mugging
+            Mugging,
+            Other
         }
 
         void Start()
@@ -41,8 +42,9 @@ namespace Assets.Scripts
                     break;
                 case State.Diving:
                     Dive();
-                    CanMug = true;
-                    CurrentState = State.Flying;
+                    CurrentState = State.Other;
+                    break;
+                case State.Other:
                     break;
             }
         }
@@ -66,12 +68,34 @@ namespace Assets.Scripts
             transform.localScale = transform.localScale.SetX(transform.localScale.x*-1);
         }
 
+        private float diveTargetX = -8.22f;
+        private GameObject targetBread;
         void Dive()
         {
+            var camOriginalPosition = Camera.main.transform.position;
+            var originalXPosition = transform.position.x;
+            _rigidbody2D.velocity = Vector2.zero;
+
             Sequence diveSequence = DOTween.Sequence();
-            diveSequence.Append(transform.DOMoveY(DiveDepth, 1.5f).SetEase(Ease.InOutCubic));
-            diveSequence.Append(transform.DOMove(new Vector3(-8.22f, .664f, 0), 1.5f));
-            diveSequence.Append(transform.DOMoveY(OriginalHeight, 1).SetEase(Ease.InOutCubic));
+            diveSequence.Append(transform.DOMove(new Vector3(diveTargetX, DiveDepth, 0f), 1.0f).SetEase(Ease.InOutCubic));
+            diveSequence.AppendCallback(() => CanMug = true);
+            diveSequence.Append(Camera.main.DOShakePosition(.2f, .5f));
+            diveSequence.Append(Camera.main.transform.DOMove(camOriginalPosition, .1f));
+            diveSequence.AppendCallback(() => Destroy(targetBread));
+            diveSequence.AppendCallback(() => CanMug = false);
+            diveSequence.Append(transform.DOMove(new Vector3(-8.22f, 1f, 0), .5f).SetEase(Ease.Linear));
+            diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
+            diveSequence.AppendCallback(() => CurrentState = State.Flying);
+        }
+
+        // Returns a bool so this method can get called in a Select
+        // Do doesn't exist in regular linq
+        public bool PursueBread(GameObject target)
+        {
+            diveTargetX = target.transform.position.x;
+            targetBread = target;
+            CurrentState = State.Diving;
+            return true;
         }
     }
 }
