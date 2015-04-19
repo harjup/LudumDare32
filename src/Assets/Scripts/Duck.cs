@@ -32,7 +32,7 @@ namespace Assets.Scripts
 
         void Start()
         {
-            var mumblePrefab = Resources.Load<GameObject>(@"Prefabs/Managers/MumblePlayer") as GameObject;
+            var mumblePrefab = Resources.Load<GameObject>(@"Prefabs/Sounds/MumblePlayer") as GameObject;
             var mumblePlayer = Instantiate(mumblePrefab);
             mumblePlayer.transform.SetParent(transform);
             MumblePlayer = mumblePlayer.GetComponent<MumblePlayer>();
