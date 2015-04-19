@@ -1,4 +1,7 @@
-﻿public class MainManager : Singleton<MainManager>
+﻿using Assets.Scripts;
+using UnityEngine;
+
+public class MainManager : Singleton<MainManager>
 {
     private DollarStore _dollarStore;
     private GuiManager _guiManager;
@@ -38,5 +41,17 @@
     private void ResetDollarCount()
     {
         _dollarStore.Reset();   
+    }
+
+    public void MakeAllFlee()
+    {
+        foreach (Civilian civilian in FindObjectsOfType<Civilian>())
+        {
+            if (civilian.CurrentState != Civilian.State.Mugged)
+            {
+                civilian.GetComponent<Civilian>().CurrentState = Civilian.State.Fleeing;
+            }
+
+        }
     }
 }
