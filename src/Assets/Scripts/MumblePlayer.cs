@@ -71,7 +71,8 @@ public class MumblePlayer : MonoBehaviourBase
             }
             else if (type == MumbleType.Fight)
             {
-                delayAmount = .1f;
+                delayAmount = 0f;
+                cutOffMultiplier = .9f;
                 _walkSource.volume = .15f;
             }
 
