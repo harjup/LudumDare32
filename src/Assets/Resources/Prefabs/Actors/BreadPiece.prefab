@@ -12,6 +12,7 @@ GameObject:
   - 61: {fileID: 6137862}
   - 114: {fileID: 11468746}
   - 50: {fileID: 5080342}
+  - 82: {fileID: 8279782}
   m_Layer: 13
   m_Name: BreadPiece
   m_TagString: Untagged
@@ -59,6 +60,75 @@ BoxCollider2D:
   m_Offset: {x: .230000004, y: -.479999989}
   serializedVersion: 2
   m_Size: {x: 2.99000001, y: 3.05999994}
+--- !u!82 &8279782
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183870}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11468746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,7 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bd0b6c9a30fe94dab8811e5d9ee1c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitFloor: 0
+  HitFloor: 0
+  thrownClip: {fileID: 0}
+  hitFloorClip: {fileID: 0}
 --- !u!212 &21247660
 SpriteRenderer:
   m_ObjectHideFlags: 1
