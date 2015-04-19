@@ -6,6 +6,7 @@ namespace Assets.Scripts
     public class Duck : MonoBehaviourBase
     {
         private Rigidbody2D _rigidbody2D;
+        private Animator _animator;
         public float MoveSpeed;
         //private Animator _animator;
         public State CurrentState;
@@ -13,6 +14,7 @@ namespace Assets.Scripts
         public float DiveDepth;
         public bool CanMug;
         public GameObject BreadPieceTarget;
+        
 
         public enum State
         {
@@ -33,6 +35,7 @@ namespace Assets.Scripts
             DuckManager.Instance.DuckList.Add(this);
             OriginalHeight = transform.position.y;
             CurrentState = State.Flying;
+            _animator = GetComponent<Animator>();
         }
 
         void Update()
@@ -62,7 +65,7 @@ namespace Assets.Scripts
             }
         }
 
-
+        
 
         private void TurnAround()
         {
@@ -79,12 +82,16 @@ namespace Assets.Scripts
             _rigidbody2D.velocity = Vector2.zero;
 
             var diveSequence = DOTween.Sequence();
+            diveSequence.AppendCallback(() => _animator.SetTrigger("Dive"));
+            
             diveSequence.AppendCallback(() => CanMug = true);
             diveSequence.Append(transform.DOMove(new Vector3(diveTargetX, DiveDepth, 0f), 1.0f).SetEase(Ease.InOutCubic));
             diveSequence.Append(Camera.main.DOShakePosition(.2f, .5f));
             diveSequence.Append(Camera.main.transform.DOMove(camOriginalPosition, .1f));
             diveSequence.AppendCallback(() => Destroy(targetBread));
             diveSequence.AppendCallback(() => CanMug = false);
+            diveSequence.AppendCallback(() => _animator.SetTrigger("Default"));
+
             diveSequence.Append(transform.DOMove(new Vector3(-8.22f, 1f, 0), .5f).SetEase(Ease.Linear));
             diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
             diveSequence.AppendCallback(() => CurrentState = State.Flying);
