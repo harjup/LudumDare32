@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">	
+		<title>Unity Web Player | %UNITY_WEB_NAME%</title>
+		%UNITY_UNITYOBJECT_DEPENDENCIES%
+	
+		<script type="text/javascript">
+		<!--
+		var unityObjectUrl = "%UNITY_UNITYOBJECT_URL%";
+		if (document.location.protocol == 'https:')
+			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
+		-->
+		</script>
+		<script type="text/javascript">
+			
+		<!--
+			var config = {
+				width: %UNITY_WIDTH%, 
+				height: %UNITY_HEIGHT%,
+				params: %UNITY_PLAYER_PARAMS%
+				
+			};
+			var u = new UnityObject2(config);
+			
+			jQuery(function() {
+
+				var $missingScreen = jQuery("#unityPlayer").find(".missing");
+				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+				$missingScreen.hide();
+				$brokenScreen.hide();
+
+				u.observeProgress(function (progress) {
+					switch(progress.pluginStatus) {
+						case "broken":
+							$brokenScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$brokenScreen.show();
+						break;
+						case "missing":
+							$missingScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$missingScreen.show();
+						break;
+						case "installed":
+							$missingScreen.remove();
+						break;
+						case "first":
+						break;
+					}
+				});
+				u.initPlugin(jQuery("#unityPlayer")[0], "%UNITY_WEB_PATH%");
+			});
+		-->
+		</script>
+		<!--Bootstrap-->
+		<!-- Latest compiled and minified CSS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<style type="text/css">
+		div.broken,
+		div.missing {
+			margin: auto;
+			position: relative;
+			top: 50%;
+			width: 193px;
+		}
+		div.broken a,
+		div.missing a {
+			height: 63px;
+			position: relative;
+			top: -31px;
+		}
+		div.broken img,
+		div.missing img {
+			border-width: 0px;
+		}
+		div.broken {
+			display: none;
+		}
+		div#unityPlayer {
+			
+			-moz-box-shadow:    0px 0px 10px  #ccc;
+			-webkit-box-shadow: 0px 0px 10px  #ccc;
+			box-shadow:         0px 0px 10px  #ccc;
+			cursor: default;
+			height: %UNITY_HEIGHT%px;
+			width: %UNITY_WIDTH%px;
+		}
+		-->
+		</style>
+	</head>
+	<body >
+		
+		
+		<div class="container">
+
+			<h3 class="text-center"><span class="label label-default"></span></h3>
+			<div class="panel panel-default">
+			
+			<div class="panel-heading">
+			<h3 class="panel-title text-center">%UNITY_WEB_NAME% %UNITY_BETA_WARNING%</h3>
+			</div>
+			<div class="panel-body" id="standout">
+				<div class="center-block" id="unityPlayer">
+					<div class="missing">
+						<a href="https://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+							<img alt="Unity Web Player. Install now!" src="https://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+						</a>
+					</div>
+				</div>
+				
+			</div>
+			<div class="panel-footer"><p class="text-center">&laquo; created with <a href="https://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+			<p class="text-center">Simple HTML5 bootstrap template by <a href="https://twitter.com/mactinite" title="Follow Me On Twitter!">@mactinite</a></p></div>
+			</div>
+			
+		</div>
+		<div id="the_lights"></div>
+				
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
+	</body>
+</html>
