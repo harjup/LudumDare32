@@ -36,7 +36,7 @@ public class ThrowingArm : MonoBehaviourBase
         Debug.Log(deltaMouse);
         _previousMousePos = mousePos;
         
-        var targetPos = Camera.main.ScreenToWorldPoint(mousePos).SetZ(0);
+        var targetPos = Camera.main.ScreenToWorldPoint(mousePos).SetZ(-5);
 
 
         if (Input.GetButtonDown("Fire1"))
