@@ -19,7 +19,7 @@ public class LargeBread : MonoBehaviour
 
     public void Update()
     {
-        Vector3 targetPos = Camera.main.ScreenToWorldPoint(arm._previousMousePos).SetZ(0);
+        Vector3 targetPos = Camera.main.ScreenToWorldPoint(arm.PreviousMousePos).SetZ(0);
 
         Vector2 direction = (targetPos - transform.position).normalized;
         var distance = (targetPos - transform.position).magnitude;

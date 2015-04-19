@@ -7,7 +7,7 @@ public class ThrowingArm : MonoBehaviourBase
 {
 
     private GameObject _armGraphic;
-    private Vector2 _currentVelocity;
+    public Vector2 PreviousMousePos;
     private LargeBread _largeBread;
     private BreadBasket _breadBasket;
 
@@ -17,7 +17,7 @@ public class ThrowingArm : MonoBehaviourBase
         _armGraphic = transform.FindChild("ArmGraphic").gameObject;
         _largeBread = FindObjectOfType<LargeBread>();
         _breadBasket = FindObjectOfType<BreadBasket>();
-        _currentVelocity = Vector2.zero;
+        PreviousMousePos = Vector2.zero;
 
         _breadBasket.Hide();
         _largeBread.Hide();
@@ -26,6 +26,7 @@ public class ThrowingArm : MonoBehaviourBase
     void Update()
     {
         Vector2 mousePos = Input.mousePosition;
+        PreviousMousePos = mousePos;
         
         var targetPos = Camera.main.ScreenToWorldPoint(mousePos).SetZ(-5);
 
@@ -75,8 +76,6 @@ public class ThrowingArm : MonoBehaviourBase
 
                 _armGraphic.transform.rotation = Quaternion.Euler(0f, 0f, angle);
                 _armGraphic.transform.localScale = _armGraphic.transform.localScale.SetX(distance) * 4.5f;
-
-                _currentVelocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
             }
 
             // End Maths
