@@ -75,7 +75,7 @@ public class ThrowingArm : MonoBehaviourBase
                 }
 
                 _armGraphic.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-                _armGraphic.transform.localScale = _armGraphic.transform.localScale.SetX(distance) * 4.5f;
+                _armGraphic.transform.localScale = _armGraphic.transform.localScale.SetX(distance) * 1.5f;
             }
 
             // End Maths
