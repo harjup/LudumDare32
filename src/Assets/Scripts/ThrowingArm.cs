@@ -8,12 +8,20 @@ public class ThrowingArm : MonoBehaviourBase
     private GameObject _armGraphic;
     private Vector2 _currentVelocity;
     public Vector2 _previousMousePos;
+    private LargeBread _largeBread;
+    private BreadBasket _breadBasket;
+
 
     void Start()
     {
         _armGraphic = transform.FindChild("ArmGraphic").gameObject;
+        _largeBread = FindObjectOfType<LargeBread>();
+        _breadBasket = FindObjectOfType<BreadBasket>();
         _currentVelocity = Vector2.zero;
         _previousMousePos = Vector2.zero;
+
+        _breadBasket.Hide();
+        _largeBread.Hide();
     }
 
     void Update()
@@ -36,6 +44,7 @@ public class ThrowingArm : MonoBehaviourBase
             //Initialize throwing arm
             transform.position = targetPos;
             _armGraphic.SetActive(true);
+            _breadBasket.Show();
         }
 
         if (Input.GetButton("Fire1"))
@@ -57,7 +66,7 @@ public class ThrowingArm : MonoBehaviourBase
                 }
 
                 _armGraphic.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-                _armGraphic.transform.localScale = _armGraphic.transform.localScale.SetX(distance) * 2;
+                _armGraphic.transform.localScale = _armGraphic.transform.localScale.SetX(distance) * 4.5f;
 
                 _currentVelocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
             }
@@ -65,15 +74,28 @@ public class ThrowingArm : MonoBehaviourBase
             // End Maths
 
             // Throwing update
+            RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            foreach (var hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<BreadBasket>())
+                {
+                    _breadBasket.Hide();
+                    _largeBread.Show();
+                }
+            }
         }
 
         if (Input.GetButtonUp("Fire1"))
         {
-            // Throwing end, actually throw bread
-            // Now we need a final direction & magnitude
-            var targetVel = FindObjectOfType<LargeBread>().GetComponent<Rigidbody2D>().velocity;
-            FindObjectOfType<BreadThrow>().ThrowTheBread(targetVel/ 5f);
+            if (_largeBread.GetComponent<SpriteRenderer>().enabled)
+            {
+                // Throwing end, actually throw bread
+                // Now we need a final direction & magnitude
+                var targetVel = FindObjectOfType<LargeBread>().GetComponent<Rigidbody2D>().velocity;
+                FindObjectOfType<BreadThrow>().ThrowTheBread(targetVel / 5f);
+            }
 
+            _largeBread.Hide();
             _armGraphic.SetActive(false);
         }
     }
