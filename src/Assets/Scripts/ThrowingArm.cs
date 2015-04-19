@@ -1,13 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class ThrowingArm : MonoBehaviourBase
 {
 
     private GameObject _armGraphic;
-    private Vector2 _currentVelocity;
-    public Vector2 _previousMousePos;
+    public Vector2 PreviousMousePos;
     private LargeBread _largeBread;
     private BreadBasket _breadBasket;
 
@@ -17,8 +17,7 @@ public class ThrowingArm : MonoBehaviourBase
         _armGraphic = transform.FindChild("ArmGraphic").gameObject;
         _largeBread = FindObjectOfType<LargeBread>();
         _breadBasket = FindObjectOfType<BreadBasket>();
-        _currentVelocity = Vector2.zero;
-        _previousMousePos = Vector2.zero;
+        PreviousMousePos = Vector2.zero;
 
         _breadBasket.Hide();
         _largeBread.Hide();
@@ -27,18 +26,20 @@ public class ThrowingArm : MonoBehaviourBase
     void Update()
     {
         Vector2 mousePos = Input.mousePosition;
-        var deltaMouse = (mousePos - _previousMousePos);
-
-        deltaMouse = new Vector2(deltaMouse.x/Screen.width, deltaMouse.y/Screen.height) / Time.smoothDeltaTime;
-
-
-        Debug.Log(deltaMouse);
-        _previousMousePos = mousePos;
+        PreviousMousePos = mousePos;
         
         var targetPos = Camera.main.ScreenToWorldPoint(mousePos).SetZ(-5);
 
+        
+
         if (Input.GetButtonDown("Fire1"))
         {
+            // We want to ignore mouseclicks that are on gui elements
+            if (EventSystem.current.IsPointerOverGameObject(-1))
+            {
+                return;
+            }
+
             //Initialize throwing arm
             transform.position = targetPos;
             // Lets have some hardcoded limits so the player can always reach the basket
@@ -75,13 +76,11 @@ public class ThrowingArm : MonoBehaviourBase
 
                 _armGraphic.transform.rotation = Quaternion.Euler(0f, 0f, angle);
                 _armGraphic.transform.localScale = _armGraphic.transform.localScale.SetX(distance) * 4.5f;
-
-                _currentVelocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
             }
 
             // End Maths
 
-            // Throwing update
+            // Check if we have moused over our bread basket
             RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             foreach (var hit in hits)
             {

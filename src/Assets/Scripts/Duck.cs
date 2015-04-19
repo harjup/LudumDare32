@@ -58,7 +58,7 @@ namespace Assets.Scripts
 
             if (other.gameObject.tag == "Civilian" && CanMug)
             {
-                other.gameObject.GetComponent<Civilian>().CurrentState = Civilian.State.Mugged;
+                other.gameObject.GetComponent<Civilian>().GetMugged();
             }
         }
 

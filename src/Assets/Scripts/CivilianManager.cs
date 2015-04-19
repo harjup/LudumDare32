@@ -11,7 +11,8 @@ public class CivilianManager : Singleton<CivilianManager>
     private float _vertical;
 
     private GameObject _civilianPrefab;
-
+    public List<GameObject> ActiveCivilians;
+    
     private void Awake()
     {
         var spawnMarkers = FindObjectsOfType<SpawnMarker>();
@@ -22,6 +23,7 @@ public class CivilianManager : Singleton<CivilianManager>
         _rightBounds = spawnMarkers.First(s => s.Bounds == BoundsDirection.Right).transform.position.x;
 
         _civilianPrefab = Resources.Load<GameObject>("Prefabs/Actors/Civilian");
+        ActiveCivilians = new List<GameObject>();
     }
 
     public void SpawnCivilians()
@@ -33,7 +35,19 @@ public class CivilianManager : Singleton<CivilianManager>
             var xPos = Random.Range(_leftBounds, _rightBounds);
             var yPos = _vertical;
 
-            Instantiate(_civilianPrefab, new Vector3(xPos, yPos), Quaternion.identity);
+            var spawnedCivilian = Instantiate(_civilianPrefab, new Vector3(xPos, yPos), Quaternion.identity) as GameObject;
+            ActiveCivilians.Add(spawnedCivilian);
+        }
+    }
+
+    public void RemoveCivilianFromActiveCount(GameObject civilian)
+    {
+        ActiveCivilians.Remove(civilian);
+
+        if (ActiveCivilians.None())
+        {
+            // Ehhhhhh sure, let's just grab it when we need it
+            MainManager.instance.EndRound();
         }
     }
 
@@ -43,6 +57,7 @@ public class CivilianManager : Singleton<CivilianManager>
         foreach (var civilian in civilians)
         {
             civilian.CleanUp();
+            ActiveCivilians.Clear();
         }
     }
 }
