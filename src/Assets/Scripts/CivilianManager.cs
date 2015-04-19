@@ -47,7 +47,7 @@ public class CivilianManager : Singleton<CivilianManager>
         if (ActiveCivilians.None())
         {
             // Ehhhhhh sure, let's just grab it when we need it
-            MainManager.instance.EndRound();
+            MainManager.Instance.EndRound();
         }
     }
 
