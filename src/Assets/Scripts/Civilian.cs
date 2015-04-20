@@ -18,6 +18,7 @@ namespace Assets.Scripts
         public float MoveSpeed;
         private Animator _animator;
         private bool _canTurn = true;
+        
 
         public enum State
         {

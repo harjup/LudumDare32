@@ -7,11 +7,15 @@ public class BreadThrow : MonoBehaviourBase
     private GameObject _breadPiece;
     private Vector3 _throwPosition;
     private Animator _animator;
+    private ParticleSystem _moneyGet;
+    private AudioSource _moneySound;
     public void Start()
     {
         _breadPiece = Resources.Load<GameObject>("Prefabs/Actors/BreadPiece");
         _throwPosition = transform.position;
         _animator = GetComponent<Animator>();
+        _moneyGet = transform.GetChild(0).GetComponent<ParticleSystem>();
+        _moneySound = GetComponent<AudioSource>();
     }
 
 
@@ -29,5 +33,16 @@ public class BreadThrow : MonoBehaviourBase
     public void GetTheMoney()
     {
         _animator.SetTrigger("Success");
+    }
+
+    public void PlayTheMoneySoundAndEffect()
+    {
+        Debug.Log("PlayTheMoneySoundAndEffect");
+        _moneyGet.Stop();
+        _moneyGet.Clear();
+        _moneyGet.Play();
+        // play the sound
+        _moneySound.Play();
+
     }
 }

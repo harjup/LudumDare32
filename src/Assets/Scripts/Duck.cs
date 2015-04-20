@@ -119,8 +119,15 @@ namespace Assets.Scripts
             {
                 ShowMoney = false;
                 DollarStore.Instance.AddDollars(StolenMoney);
+                
+                if (StolenMoney > 0f)
+                {
+                    FindObjectOfType<BreadThrow>().PlayTheMoneySoundAndEffect();
+                }
+
                 StolenMoney = 0f;
             });
+            
 
             diveSequence.Append(transform.DOMove(new Vector3(originalXPosition, OriginalHeight, 0f), .3f).SetEase(Ease.Linear));
             diveSequence.AppendCallback(() => CurrentState = State.Flying);
